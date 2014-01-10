@@ -127,7 +127,9 @@ def parse_args(args):
 
 
 def write_pygments_css(style, formatter,
-        location=config.css_dir):
+        location=None):
+    if location is None:
+        location = config.css_dir
     path = bf.util.path_join("_site", bf.util.fs_site_path_helper(location))
     bf.util.mkdir(path)
     css_file = "pygments_{0}.css".format(style)
