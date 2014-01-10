@@ -3,8 +3,8 @@ import os.path
 import re
 import sys
 from setuptools import setup
-import blogofile_blog
 
+__version__ = "0.8b1"
 
 py_version = sys.version_info[:2]
 PY3 = py_version[0] == 3
@@ -18,7 +18,7 @@ else:
         raise RuntimeError(
             'On Python 2, Blogofile requires Python 2.6 or better')
 
-description = blogofile_blog.__dist__['pypi_description']
+description = "A simple blog engine plugin for Blogofile"
 with open('README.rst', 'rt') as readme:
     long_description = readme.read()
 with open('CHANGES.txt', 'rt') as changes:
@@ -27,6 +27,7 @@ with open('CHANGES.txt', 'rt') as changes:
 dependencies = [
     'Blogofile',
     'six',
+    'pkginfo',
     ]
 if PY26:
     dependencies.append('argparse')
@@ -57,12 +58,12 @@ classifiers.extend([
 
 setup(
     name="blogofile_blog",
-    version=blogofile_blog.__version__,
-    description=blogofile_blog.__dist__['pypi_description'],
+    version=__version__,
+    description=description,
     long_description=long_description,
-    author=blogofile_blog.__dist__["author"],
+    author="Ryan McGuire, Doug Latornell, and the Blogofile Contributors",
     author_email="blogofile-discuss@googlegroups.com",
-    url=blogofile_blog.__dist__["url"],
+    url="http://www.blogofile.com",
     license="MIT",
     classifiers=classifiers,
     packages=["blogofile_blog"],

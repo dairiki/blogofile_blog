@@ -5,6 +5,7 @@ try:
     from urllib.parse import urlparse   # For Python 2
 except ImportError:
     from urlparse import urlparse       # For Python 2; flake8 ignore # NOQA
+import pkginfo
 import blogofile
 import blogofile.plugin
 from blogofile.cache import (
@@ -13,6 +14,7 @@ from blogofile.cache import (
 )
 from . import commands
 
+_pkg_info = pkginfo.Installed('blogofile_blog')
 
 ## Configure the plugin meta information:
 __dist__ = dict(
@@ -22,17 +24,17 @@ __dist__ = dict(
     #referenced as bf.config.plugins.name
     config_name="blog",
     #Your name:
-    author="Ryan McGuire, Doug Latornell, and the Blogofile Contributors",
+    author=_pkg_info.author,
     #The version number:
-    version="0.8b1",
+    version=_pkg_info.version,
     #The URL for the plugin (where to download, documentation etc):
-    url="http://www.blogofile.com",
+    url=_pkg_info.home_page,
     #A one line description of your plugin presented to other Blogofile users:
     description="A simple blog engine",
     #PyPI description, could be the same, except this text
     #should mention the fact that this is a Blogofile plugin
     #because non-Blogofile users will see this text:
-    pypi_description="A simple blog engine plugin for Blogofile",
+    pypi_description=_pkg_info.description,
     #Command parser
     command_parser_setup=commands.setup_parser
     )
