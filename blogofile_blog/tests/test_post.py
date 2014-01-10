@@ -213,3 +213,13 @@ class TestPost(unittest.TestCase):
         expected = pytz.timezone(blog_config.timezone).localize(
             datetime(2012, 11, 11, 20, 58, 42))
         self.assertEqual(post.updated, expected)
+
+    def test_repr_with_unicode_title(self):
+        post_content = six.u(
+            '---\n'
+            'title: Gru\N{LATIN SMALL LETTER SHARP S}\n'
+            '---\n'
+            )
+        post = self._make_one(post_content)
+        post_repr = repr(post)
+        self.assertRegexpMatches(post_repr, r"title=u'Gru\\xdf'")

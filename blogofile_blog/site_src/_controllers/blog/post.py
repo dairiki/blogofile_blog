@@ -107,7 +107,7 @@ class Post(object):
         self.__post_process()
 
     def __repr__(self):
-        return ("<Post title='{0.title}' date='{0.date:%Y/%m/%d %H:%M:%S}'>"
+        return ("<Post title={0.title!r} date='{0.date:%Y/%m/%d %H:%M:%S}'>"
                 .format(self))
 
     def __parse(self):
