@@ -3,6 +3,7 @@ from __future__ import print_function
 import shutil
 import sys
 import os
+from six import u
 import blogofile.main
 
 
@@ -80,6 +81,6 @@ def list_posts(args):
     p_num = len(posts)
     for p in posts:
         print(
-            "{0:>4} | {1:%Y/%m/%d} | {2} | {3}"
+            u("{0:>4} | {1:%Y/%m/%d} | {2} | {3}")
             .format(p_num, p.date, p.title, p.filename))
         p_num -= 1

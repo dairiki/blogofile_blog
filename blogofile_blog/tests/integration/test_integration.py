@@ -3,11 +3,13 @@
 """
 import os
 import shutil
+import sys
 from tempfile import mkdtemp
 try:
     import unittest2 as unittest        # For Python 2.6
 except ImportError:
     import unittest                     # flake8 ignore # NOQA
+from six import StringIO
 from blogofile import main
 
 
@@ -41,3 +43,23 @@ class TestBlogofileBlogCommands(unittest.TestCase):
         self._call_entry_point(['blogofile', 'init', src_dir, 'blog'])
         self._call_entry_point(['blogofile', 'build', '-s', src_dir])
         self.assertIn('_site', os.listdir(src_dir))
+
+    def test_blogofile_list_blog_site_posts(self):
+        """`blogofile blog post list` works
+        """
+        self.addCleanup(os.chdir, os.getcwd())
+        src_dir = mkdtemp()
+        self.addCleanup(shutil.rmtree, src_dir)
+        os.rmdir(src_dir)
+        self._call_entry_point(['blogofile', 'init', src_dir, 'blog'])
+
+        save_cwd = os.getcwd()
+        save_stdout = sys.stdout
+        try:
+            os.chdir(src_dir)
+            sys.stdout = StringIO()
+            self._call_entry_point(['blogofile', 'blog', 'post', 'list'])
+            self.assertRegexpMatches(sys.stdout.getvalue(), r'Unicode Test')
+        finally:
+            sys.stdout = save_stdout
+            os.chdir(save_cwd)
